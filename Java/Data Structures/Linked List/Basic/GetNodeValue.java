@@ -1,3 +1,5 @@
+package Basic;
+
 import java.io.*;
 import java.math.*;
 import java.security.*;
@@ -7,6 +9,7 @@ import java.util.concurrent.*;
 import java.util.function.*;
 import java.util.regex.*;
 import java.util.stream.*;
+
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 
@@ -43,14 +46,15 @@ class SinglyLinkedList {
 }
 
 class SinglyLinkedListPrintHelper {
-    public static void printList(SinglyLinkedListNode node, String sep) {
+    public static void printList(SinglyLinkedListNode node, String sep, BufferedWriter bufferedWriter)
+            throws IOException {
         while (node != null) {
-            System.out.print(node.data);
+            bufferedWriter.write(String.valueOf(node.data));
 
             node = node.next;
 
             if (node != null) {
-                System.out.print(sep);
+                bufferedWriter.write(sep);
             }
         }
     }
@@ -59,9 +63,12 @@ class SinglyLinkedListPrintHelper {
 class Result {
 
     /*
-     * Complete the 'reversePrint' function below.
+     * Complete the 'getNode' function below.
      *
-     * The function accepts INTEGER_SINGLY_LINKED_LIST llist as parameter.
+     * The function is expected to return an INTEGER.
+     * The function accepts following parameters:
+     * 1. INTEGER_SINGLY_LINKED_LIST llist
+     * 2. INTEGER positionFromTail
      */
 
     /*
@@ -74,19 +81,19 @@ class Result {
      *
      */
 
-    public static void reversePrint(SinglyLinkedListNode llist) {
-        // Write your code here
-        Stack<Integer> stack = new Stack<>();
-        SinglyLinkedListNode head = llist;
-        while (head != null) {
-            stack.push(head.data);
-            head = head.next;
+    public static int getNode(SinglyLinkedListNode llist, int positionFromTail) {
+        int count = 0;
+        SinglyLinkedListNode i = llist;
+        while (i != null) {
+            i = i.next;
+            count++;
         }
+        count -= positionFromTail;
 
-        while (stack.size() > 0) {
-            System.out.println(stack.pop());
+        while (--count > 0) {
+            llist = llist.next;
         }
-
+        return llist.data;
     }
 
 }
@@ -94,6 +101,7 @@ class Result {
 public class Solution {
     public static void main(String[] args) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
 
         int tests = Integer.parseInt(bufferedReader.readLine().trim());
 
@@ -113,12 +121,18 @@ public class Solution {
                     }
                 });
 
-                Result.reversePrint(llist.head);
+                int position = Integer.parseInt(bufferedReader.readLine().trim());
+
+                int result = Result.getNode(llist.head, position);
+
+                bufferedWriter.write(String.valueOf(result));
+                bufferedWriter.newLine();
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
         });
 
         bufferedReader.close();
+        bufferedWriter.close();
     }
 }

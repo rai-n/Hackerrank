@@ -1,9 +1,9 @@
+package Basic;
+
 import java.io.*;
 import java.math.*;
-import java.security.*;
 import java.text.*;
 import java.util.*;
-import java.util.concurrent.*;
 import java.util.regex.*;
 
 public class Solution {
@@ -27,6 +27,17 @@ public class Solution {
             this.tail = null;
         }
 
+        public void insertNode(int nodeData) {
+            SinglyLinkedListNode node = new SinglyLinkedListNode(nodeData);
+
+            if (this.head == null) {
+                this.head = node;
+            } else {
+                this.tail.next = node;
+            }
+
+            this.tail = node;
+        }
     }
 
     public static void printSinglyLinkedList(SinglyLinkedListNode node, String sep, BufferedWriter bufferedWriter)
@@ -42,7 +53,7 @@ public class Solution {
         }
     }
 
-    // Complete the insertNodeAtHead function below.
+    // Complete the compareLists function below.
 
     /*
      * For your reference:
@@ -53,13 +64,15 @@ public class Solution {
      * }
      *
      */
-    static SinglyLinkedListNode insertNodeAtHead(SinglyLinkedListNode llist, int data) {
-
-        SinglyLinkedListNode head = new SinglyLinkedListNode(data);
-        head.next = llist;
-
-        return head;
-
+    static boolean compareLists(SinglyLinkedListNode head1, SinglyLinkedListNode head2) {
+        while (head1 != null && head2 != null) {
+            if (head1.data != head2.data) {
+                return false;
+            }
+            head1 = head1.next;
+            head2 = head2.next;
+        }
+        return (head1 == null && head2 == null);
 }
 
 private static final Scanner scanner = new Scanner(System.in);

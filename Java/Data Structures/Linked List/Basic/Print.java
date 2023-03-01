@@ -1,3 +1,5 @@
+package Basic;
+
 import java.io.*;
 import java.math.*;
 import java.security.*;
@@ -40,20 +42,7 @@ public class Solution {
         }
     }
 
-    public static void printSinglyLinkedList(SinglyLinkedListNode node, String sep, BufferedWriter bufferedWriter)
-            throws IOException {
-        while (node != null) {
-            bufferedWriter.write(String.valueOf(node.data));
-
-            node = node.next;
-
-            if (node != null) {
-                bufferedWriter.write(sep);
-            }
-        }
-    }
-
-    // Complete the findMergeNode function below.
+    // Complete the printLinkedList function below.
 
     /*
      * For your reference:
@@ -64,20 +53,11 @@ public class Solution {
      * }
      *
      */
-    static int findMergeNode(SinglyLinkedListNode head1, SinglyLinkedListNode head2) {
-
-        while (head2 != null) {
-            SinglyLinkedListNode temp = head1;
-            while (temp != null) {
-                if (temp == head2) {
-                    return head2.data;
-                }
-                temp = temp.next;
-
-            }
-            head2 = head2.next;
+    static void printLinkedList(SinglyLinkedListNode head) {
+        while (head != null) {
+            System.out.println(head.data);
+            head = head.next;
         }
-        return -1;
 
 }
 

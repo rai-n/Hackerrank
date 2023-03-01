@@ -60,12 +60,10 @@ class SinglyLinkedListPrintHelper {
 class Result {
 
     /*
-     * Complete the 'getNode' function below.
+     * Complete the 'removeDuplicates' function below.
      *
-     * The function is expected to return an INTEGER.
-     * The function accepts following parameters:
-     * 1. INTEGER_SINGLY_LINKED_LIST llist
-     * 2. INTEGER positionFromTail
+     * The function is expected to return an INTEGER_SINGLY_LINKED_LIST.
+     * The function accepts INTEGER_SINGLY_LINKED_LIST llist as parameter.
      */
 
     /*
@@ -78,19 +76,26 @@ class Result {
      *
      */
 
-    public static int getNode(SinglyLinkedListNode llist, int positionFromTail) {
-        int count = 0;
-        SinglyLinkedListNode i = llist;
-        while (i != null) {
-            i = i.next;
-            count++;
-        }
-        count -= positionFromTail;
+    public static SinglyLinkedListNode removeDuplicates(SinglyLinkedListNode llist) {
+        // Write your code here
 
-        while (--count > 0) {
-            llist = llist.next;
+        if (llist == null)
+            return llist;
+
+        SinglyLinkedListNode head = llist;
+
+        while (llist.next != null) {
+
+            if (llist.data == llist.next.data) {
+                llist.next = llist.next.next;
+            } else {
+                // removes multiple duplicates
+                llist = llist.next;
+            }
+
         }
-        return llist.data;
+
+        return head;
     }
 
 }
@@ -100,9 +105,9 @@ public class Solution {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
 
-        int tests = Integer.parseInt(bufferedReader.readLine().trim());
+        int t = Integer.parseInt(bufferedReader.readLine().trim());
 
-        IntStream.range(0, tests).forEach(testsItr -> {
+        IntStream.range(0, t).forEach(tItr -> {
             try {
                 SinglyLinkedList llist = new SinglyLinkedList();
 
@@ -118,11 +123,9 @@ public class Solution {
                     }
                 });
 
-                int position = Integer.parseInt(bufferedReader.readLine().trim());
+                SinglyLinkedListNode llist1 = Result.removeDuplicates(llist.head);
 
-                int result = Result.getNode(llist.head, position);
-
-                bufferedWriter.write(String.valueOf(result));
+                SinglyLinkedListPrintHelper.printList(llist1, " ", bufferedWriter);
                 bufferedWriter.newLine();
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
